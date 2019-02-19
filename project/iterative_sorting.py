@@ -25,14 +25,18 @@ def insertion_sort(arr):
 
     for x in range(1, len(arr)):
         index = x
+        # value we are usign to compare
         value = arr[x]
 
-        while index > 0 and arr[index - 1]>value:
-            arr[index]=arr[index-1]
+        #if we are not at position 0 
+        # and the value is less than the value to its left
+        while index > 0 and arr[index - 1] > value:
+            # shift the value on the left one position to the right
+            arr[index] = arr[index-1]
             index = index-1
-
+        # assign the valaue to its new position 
+        # where it is less than the value positioned on its right
         arr[index]=value
-
     return arr
 
 # try it out
