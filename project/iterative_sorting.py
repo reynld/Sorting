@@ -21,13 +21,13 @@ def selection_sort( arr ):
 
 
 # TO-DO: implement the Insertion Sort function below
-def insertion_sort( arr ):
+def insertion_sort(arr):
 
-    for x in range(1, len(arr) -1):
+    for x in range(1, len(arr)):
         index = x
         value = arr[x]
 
-        while index > 0 and arr[index-1]>value:
+        while index > 0 and arr[index - 1]>value:
             arr[index]=arr[index-1]
             index = index-1
 
