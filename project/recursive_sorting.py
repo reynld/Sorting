@@ -22,7 +22,8 @@ def merge( arrA, arrB ):
 
 
 ### recursive sorting function
-def merge_sort( arr ):
+def merge_sort(arr):
+    # 
     if len( arr ) > 1:
         left = merge_sort( arr[ 0 : len( arr ) // 2 ] )
         right = merge_sort( arr[ len( arr ) // 2 : ] )
@@ -56,23 +57,43 @@ def get_pivot(arr, low, high):
     return pivot
 
 def parition(arr, low, high):
-    index = get_pivot(arr, low, high)
-    value = arr[index]
+    # get pivot returns the median value in the array
+    # out of the lowest middle and higest position
+    pivot_index = get_pivot(arr, low, high)
 
-    arr[index], arr[low] = arr[low], arr[index]
-    border = low
+    #gets the value at the index which is our pivot
+    pivot_value = arr[pivot_index]
 
+    # swapping the values at the pivot index and the lowest index
+    arr[pivot_index], arr[low] = arr[low], arr[pivot_index]
+
+    # assingning the lowest position to a most_left variable
+    most_left = low
+
+    # loops through the array range between the lowest position and the highest position
     for i in range (low, high+1):
-        if arr[i] < value:
-            border += 1
-            arr[i], arr[border] = arr[border], arr[i]
+        # if value at position i is less than the pivot value
+        if arr[i] < pivot_value:
+            # move the order over to the next position
+            most_left += 1
+            # swap value at index i and the the value at the new most_left index
+            arr[i], arr[most_left] = arr[most_left], arr[i]
     
-    arr[low], arr[border] = arr[border], arr[low]
-    return border
+    # swap value at the lowest position and the value at the most_left position
+    arr[low], arr[most_left] = arr[most_left], arr[low]
+
+    # return the left most index where 
+    return most_left
 
 
 def quick_sort( arr, low, high ):
+    # arr is the array we are trting to sort
+    # low is the lowest position in the array, most left position
+    # high is the gihest position in the array, most right position
+
+    # if the lowest position is still less than the highest position
     if low < high:
+        # get a pivot to split up the array
         pivot = parition(arr, low, high)
         quick_sort(arr, low, pivot-1)
         quick_sort(arr, pivot + 1, high)
@@ -92,3 +113,48 @@ print(arr);
 def timsort( arr ):
 
     return arr
+
+
+
+
+# Brady Solution
+def partition(arr, low, high):
+    pivot = arr[high]
+
+    index = low - 1
+
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            index += 1
+            arr[index], arr[j] = arr[j], arr[index]
+        
+    arr[index + 1], arr[high] = arr[high], arr[index + 1]
+    return index + 1
+
+def quick_sort(arr, low, high) :
+    if high is None:
+        high = len(arr) - 1
+    
+    if low < high:
+        pivot = partition(arr, low, high)
+        quick_sort(arr, low, pivot -1)
+        quick_sort(arr, pivot + 1, high)
+    return arr
+
+
+# Carlos solution
+def quick_sort(arr):
+        # base case (arrays with 0 or 1 are already sorted)
+    if (len(arr) < 2):
+        # so just return the array
+        return arr
+    else:
+        # else start your pivot at the first number
+        pivot = arr[0]
+        # sub array of all the elements less than the pivot
+        less = [i for i in arr[1:] if i <= pivot]
+        # sub-array of all the elements greater than the pivot
+        greater = [i for i in arr[1:] if i > pivot]
+        return quick_sort(less) + [pivot] + quick_sort(greater)
+
+
